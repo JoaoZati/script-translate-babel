@@ -1,6 +1,7 @@
 from translate import Translator
 
-file_path = "/home/joao/Dev/brain/app/translations/en/LC_MESSAGES/messages_copy.po"
+file_path_en = "/home/joao/Dev/brain/app/translations/en/LC_MESSAGES/messages.po"
+file_path_es = "/home/joao/Dev/brain/app/translations/es/LC_MESSAGES/messages.po"
 
 
 def split_and_append_from_caracter(str_new, str_file, caracter):
@@ -33,6 +34,8 @@ def translate_word_from_old_to_new(str_new, str_file, translator, translate_olds
     if not str_palavra_traduzida or translate_olds:
         str_palavra_traduzida = translator.translate(str_palavra_a_traduzir)
 
+    print(f'Traduzindo: {str_palavra_a_traduzir} Para:{str_palavra_traduzida}')
+
     if len(lst_traducao) <= 2:
         str_new += str_palavra_traduzida + '"'
         return str_new, ""
@@ -42,9 +45,8 @@ def translate_word_from_old_to_new(str_new, str_file, translator, translate_olds
     return str_new, str_file
 
 
-def main():
-    to_lang = input("Digite a linguagem para traduzir do portugues (Ex: 'en', 'es'): ")
-    translator = Translator(to_lang=to_lang, from_lang='pt')
+def generate_message_po(file_path, to_lang, from_lang='pt'):
+    translator = Translator(to_lang=to_lang, from_lang=from_lang)
 
     with open(file_path, 'r') as file:
         str_file = file.read()
@@ -56,9 +58,10 @@ def main():
         if not str_file:
             break
 
-    with open('messages.po', 'w') as text_file:
+    with open(f'messages_{to_lang}.po', 'w') as text_file:
         text_file.write(str_new)
 
 
 if __name__=='__main__':
-    main()
+    generate_message_po(file_path_en, 'en', from_lang='pt')
+    generate_message_po(file_path_es, 'es', from_lang='pt')
