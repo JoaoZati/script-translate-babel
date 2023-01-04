@@ -45,7 +45,7 @@ def translate_word_from_old_to_new(str_new, str_file, translator, translate_olds
     return str_new, str_file
 
 
-def generate_message_po(file_path, to_lang, from_lang='pt'):
+def generate_message_po(file_path, to_lang, from_lang='pt', translate_olds=False):
     translator = Translator(to_lang=to_lang, from_lang=from_lang)
 
     with open(file_path, 'r') as file:
@@ -54,7 +54,10 @@ def generate_message_po(file_path, to_lang, from_lang='pt'):
     # Coping init of file_string in a new string with caracter '#:'
     str_new, str_file = split_and_append_from_caracter('', str_file, '#:')
     while True:
-        str_new, str_file = translate_word_from_old_to_new(str_new, str_file, translator)
+        str_new, str_file = translate_word_from_old_to_new(
+            str_new, str_file, translator, translate_olds
+        )
+
         if not str_file:
             break
 
@@ -63,5 +66,9 @@ def generate_message_po(file_path, to_lang, from_lang='pt'):
 
 
 if __name__=='__main__':
+    print('#'*100)
+    print('Traduzindo messages_en.po')
     generate_message_po(file_path_en, 'en', from_lang='pt')
+    print('#'*100)
+    print('Traduzindo messages_es.po')
     generate_message_po(file_path_es, 'es', from_lang='pt')
