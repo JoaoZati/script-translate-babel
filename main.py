@@ -31,10 +31,12 @@ def translate_word_from_old_to_new(str_new, str_file, translator, translate_olds
     lst_traducao = str_file.split('"')
     str_palavra_traduzida = lst_traducao[0]
 
+    palavra_traducao = 'Traducão Pulada'
     if not str_palavra_traduzida or translate_olds:
         str_palavra_traduzida = translator.translate(str_palavra_a_traduzir)
+        palavra_traducao = 'Traduzido'
 
-    print(f'Traduzindo: {str_palavra_a_traduzir} Para:{str_palavra_traduzida}')
+    print(f'{palavra_traducao}:|{str_palavra_a_traduzir}| - Para:|{str_palavra_traduzida}|')
 
     if len(lst_traducao) <= 2:
         str_new += str_palavra_traduzida + '"'
