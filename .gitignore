@@ -1,2 +1,4 @@
 .venv/
 messages.po
+messages_en.po
+messages_es.po
