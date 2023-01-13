@@ -1,7 +1,9 @@
 from translate import Translator
 
-file_path_en = "/home/joao/Dev/brain/app/translations/en/LC_MESSAGES/messages.po"
-file_path_es = "/home/joao/Dev/brain/app/translations/es/LC_MESSAGES/messages.po"
+file_path_en = "/home/joaozati/Dev/brain/app/translations/en/LC_MESSAGES/messages.po"
+file_path_out_en = "/home/joaozati/Dev/brain/app/translations/en/LC_MESSAGES/messages_en.po"
+file_path_es = "/home/joaozati/Dev/brain/app/translations/es/LC_MESSAGES/messages.po"
+file_path_out_es = "/home/joaozati/Dev/brain/app/translations/es/LC_MESSAGES/messages_es.po"
 
 
 def split_and_append_from_caracter(str_new, str_file, caracter):
@@ -47,7 +49,7 @@ def translate_word_from_old_to_new(str_new, str_file, translator, translate_olds
     return str_new, str_file
 
 
-def generate_message_po(file_path, to_lang, from_lang='pt', translate_olds=False):
+def generate_message_po(file_path, file_path_out, to_lang, from_lang='pt', translate_olds=False):
     translator = Translator(to_lang=to_lang, from_lang=from_lang)
 
     with open(file_path, 'r') as file:
@@ -63,14 +65,14 @@ def generate_message_po(file_path, to_lang, from_lang='pt', translate_olds=False
         if not str_file:
             break
 
-    with open(f'messages_{to_lang}.po', 'w') as text_file:
+    with open(file_path_out, 'w') as text_file:
         text_file.write(str_new)
 
 
 if __name__=='__main__':
     print('#'*100)
     print('Traduzindo messages_en.po')
-    generate_message_po(file_path_en, 'en', from_lang='pt')
+    generate_message_po(file_path_en, file_path_out_en, 'en', from_lang='pt')
     print('#'*100)
     print('Traduzindo messages_es.po')
-    generate_message_po(file_path_es, 'es', from_lang='pt')
+    generate_message_po(file_path_es, file_path_out_es, 'es', from_lang='pt')
