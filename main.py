@@ -14,7 +14,13 @@ def split_and_append_from_caracter(str_new, str_file, caracter):
     return str_new, str_file
 
 
-def translate_word_from_old_to_new(str_new, str_file, translator, translate_olds=False):
+def translate_word_from_old_to_new(
+    str_new,
+    str_file,
+    translator,
+    translate_olds=False,
+    number_print=1,
+):
     """
     str_new: str, string will be created a new file
     str_file: str, string from old po file that will be translated
@@ -38,7 +44,9 @@ def translate_word_from_old_to_new(str_new, str_file, translator, translate_olds
         str_palavra_traduzida = translator.translate(str_palavra_a_traduzir)
         palavra_traducao = 'Traduzido'
 
-    print(f'{palavra_traducao}:|{str_palavra_a_traduzir}| - Para:|{str_palavra_traduzida}|')
+    print(
+        f'{number_print}) {palavra_traducao}:|{str_palavra_a_traduzir}| - Para:|{str_palavra_traduzida}|'
+    )
 
     if len(lst_traducao) <= 2:
         str_new += str_palavra_traduzida + '"'
@@ -57,9 +65,11 @@ def generate_message_po(file_path, file_path_out, to_lang, from_lang='pt', trans
 
     # Coping init of file_string in a new string with caracter '#:'
     str_new, str_file = split_and_append_from_caracter('', str_file, '#:')
+    count = 0
     while True:
+        count += 1
         str_new, str_file = translate_word_from_old_to_new(
-            str_new, str_file, translator, translate_olds
+            str_new, str_file, translator, translate_olds, number_print=count
         )
 
         if not str_file:
